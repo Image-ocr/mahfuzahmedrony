@@ -28,6 +28,30 @@ const Projects = () => {
     <section id="projects" className="container relative py-32 lg:py-40">
       <SectionTitle eyebrow="Selected Work" title="Projects with intent." />
 
+      {/* Showreel */}
+      <motion.div
+        initial={{ opacity: 0, y: 60, scale: 0.96 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        className="glass group relative mb-10 overflow-hidden rounded-3xl"
+      >
+        <div className="absolute left-6 top-6 z-10 flex items-center gap-2 rounded-full glass-button px-3 py-1.5 text-xs uppercase tracking-[0.2em]">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+          Showreel
+        </div>
+        <video
+          src="/my-project.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+      </motion.div>
+
       <div className="space-y-6">
         {projects.map((p, i) => (
           <motion.a
