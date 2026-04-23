@@ -1,11 +1,10 @@
 import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
+import SpotlightText from "./SpotlightText";
 
 const About = () => {
   const text =
     "Mahfuz Ahmed Rony is a multidisciplinary individual combining legal knowledge, web development, and graphic design. Currently pursuing an LLB at Islamic University, he focuses on legal research, writing, and case analysis while building modern digital solutions. He is passionate about simplifying complex systems through technology and creating impactful, user-centered experiences.";
-
-  const words = text.split(" ");
 
   return (
     <section id="about" className="container relative py-32 lg:py-40">
@@ -13,20 +12,11 @@ const About = () => {
 
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
         <div className="lg:col-span-7 lg:col-start-2">
-          <p className="text-xl leading-relaxed text-foreground/90 sm:text-2xl lg:text-[1.65rem] lg:leading-[1.5]">
-            {words.map((w, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.012 }}
-                className="inline-block"
-              >
-                {w}&nbsp;
-              </motion.span>
-            ))}
-          </p>
+          <SpotlightText
+            text={text}
+            speed={300}
+            className="font-artistic text-xl leading-relaxed sm:text-2xl lg:text-[1.65rem] lg:leading-[1.55]"
+          />
         </div>
 
         <motion.div

@@ -7,18 +7,21 @@ import Projects from "@/components/portfolio/Projects";
 import Experience from "@/components/portfolio/Experience";
 import Contact from "@/components/portfolio/Contact";
 import Footer from "@/components/portfolio/Footer";
+import CursorBlob from "@/components/portfolio/CursorBlob";
+import CurtainReveal from "@/components/portfolio/CurtainReveal";
 
 const Index = () => {
   return (
     <main className="relative min-h-screen overflow-hidden bg-background grain">
+      <CursorBlob />
       <Nav />
       <Hero />
-      <About />
-      <Skills />
-      <Education />
-      <Projects />
-      <Experience />
-      <Contact />
+      <CurtainReveal><About /></CurtainReveal>
+      <CurtainReveal><Skills /></CurtainReveal>
+      <CurtainReveal><Education /></CurtainReveal>
+      <CurtainReveal><Projects /></CurtainReveal>
+      <CurtainReveal><Experience /></CurtainReveal>
+      <CurtainReveal><Contact /></CurtainReveal>
       <Footer />
     </main>
   );
