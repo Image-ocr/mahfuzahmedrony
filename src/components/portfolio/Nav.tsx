@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "@/hooks/use-theme";
 
 const Nav = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <motion.header
       initial={{ y: -30, opacity: 0 }}
@@ -12,12 +16,19 @@ const Nav = () => {
         <a href="#home" className="glass-button rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em]">
           Menu
         </a>
-        <a href="#home" className="hidden font-serif text-xl tracking-wide sm:block">
-          RONY<span className="text-accent">.</span>
-        </a>
-        <a href="#contact" className="glass-button rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em]">
-          Contact
-        </a>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="glass-button flex h-9 w-9 items-center justify-center rounded-full"
+          >
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+          <a href="#contact" className="glass-button rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em]">
+            Contact
+          </a>
+        </div>
       </div>
     </motion.header>
   );
