@@ -14,10 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Bricolage Grotesque', 'Inter', 'system-ui', 'sans-serif'],
-        serif: ['Instrument Serif', 'serif'],
-        display: ['Anton', 'Impact', 'sans-serif'],
-        artistic: ['Unbounded', 'Bricolage Grotesque', 'sans-serif'],
+        sans: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['Fraunces', 'Instrument Serif', 'serif'],
+        display: ['Unbounded', 'Anton', 'Impact', 'sans-serif'],
+        artistic: ['Fraunces', 'Instrument Serif', 'serif'],
         handwrite: ['Caveat Brush', 'cursive'],
       },
       colors: {
