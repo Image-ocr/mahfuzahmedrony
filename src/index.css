@@ -37,6 +37,9 @@
     --input: 0 0% 85%;
     --ring: 38 65% 50%;
 
+    /* Status / availability accent (emerald) */
+    --available: 152 65% 42%;
+
     --radius: 0.75rem;
 
     /* Glass tokens (light) */
@@ -87,6 +90,8 @@
     --border: 0 0% 14%;
     --input: 0 0% 14%;
     --ring: 38 65% 62%;
+
+    --available: 152 70% 52%;
 
     --glass-bg: 0 0% 100%;
     --glass-border: 0 0% 100%;
