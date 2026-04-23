@@ -45,9 +45,9 @@ const Hero = () => {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 1.4 }}
-        className="group fixed left-4 top-24 z-40 sm:top-28"
+        className="group fixed left-3 top-20 z-40 sm:left-4 sm:top-28"
       >
-        <div className="glass-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-foreground/85 transition-all duration-300 group-hover:scale-105">
+        <div className="glass-button inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[9px] uppercase tracking-[0.2em] text-foreground/85 transition-all duration-300 group-hover:scale-105 sm:px-4 sm:py-2 sm:text-[10px] sm:tracking-[0.25em]">
           <span className="relative flex h-2 w-2">
             <span
               className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
@@ -91,7 +91,7 @@ const Hero = () => {
           </h1>
 
           {/* Powerful staggered statement */}
-          <div className="mt-6 max-w-3xl font-artistic text-2xl leading-[1.15] tracking-tight text-foreground/90 sm:text-3xl lg:text-[2.5rem] lg:leading-[1.1]">
+          <div className="mt-6 max-w-3xl font-artistic text-xl leading-[1.18] tracking-tight text-foreground/90 sm:text-3xl lg:text-[2.5rem] lg:leading-[1.1]">
             {statement.map((line, li) => (
               <div
                 key={li}
