@@ -17,6 +17,21 @@ const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
   const textY = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
+  // RONY split — RO drifts left, NY drifts right as user scrolls.
+  // Scrolling back up returns them to center (natural loop).
+  const roX = useTransform(scrollYProgress, [0, 0.6], ["0vw", "-55vw"]);
+  const nyX = useTransform(scrollYProgress, [0, 0.6], ["0vw", "55vw"]);
+  // Glow strongest when fully visible at top, fades as letters separate.
+  const glow = useTransform(
+    scrollYProgress,
+    [0, 0.25, 0.6],
+    [
+      "0 0 80px hsl(var(--accent) / 0.55), 0 0 160px hsl(var(--accent) / 0.3)",
+      "0 0 40px hsl(var(--accent) / 0.25)",
+      "0 0 0px hsl(var(--accent) / 0)",
+    ]
+  );
+
   // Word reveal flat index counter for staggered timing across all lines
   let wordIndex = 0;
 
@@ -81,16 +96,28 @@ const Hero = () => {
             Portfolio · 26
           </motion.div>
 
-          {/* Big artistic name */}
+          {/* Big artistic name — RO and NY split apart on scroll, glow at rest */}
           <h1 className="font-display uppercase leading-[0.82] tracking-[-0.02em] text-foreground">
-            <motion.span
-              initial={{ y: "110%", opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1.1, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
-              className="block text-[26vw] sm:text-[22vw] lg:text-[18vw]"
-            >
-              RONY
-            </motion.span>
+            <span className="flex w-full items-baseline justify-center text-[26vw] sm:text-[22vw] lg:text-[18vw] will-change-transform">
+              <motion.span
+                initial={{ y: "110%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                style={{ x: roX, textShadow: glow, willChange: "transform" }}
+                className="inline-block"
+              >
+                RO
+              </motion.span>
+              <motion.span
+                initial={{ y: "110%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.28 }}
+                style={{ x: nyX, textShadow: glow, willChange: "transform" }}
+                className="inline-block"
+              >
+                NY
+              </motion.span>
+            </span>
           </h1>
 
           {/* Powerful staggered statement */}

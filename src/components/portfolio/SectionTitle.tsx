@@ -23,8 +23,8 @@ const SectionTitle = ({ eyebrow, title, className = "" }: SectionTitleProps) => 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, delay: 0.1 }}
-        className="font-serif text-5xl leading-[0.95] tracking-tight text-gradient sm:text-7xl lg:text-8xl"
+        transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+        className="font-display font-extrabold uppercase leading-[0.9] tracking-[-0.02em] text-foreground text-5xl sm:text-7xl lg:text-8xl"
       >
         {title}
       </motion.h2>
