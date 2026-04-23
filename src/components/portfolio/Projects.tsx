@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import SectionTitle from "./SectionTitle";
-import { ArrowUpRight, Volume2, VolumeX } from "lucide-react";
+import { ArrowUpRight, Volume2, VolumeX, X } from "lucide-react";
 
 const projects = [
   {
@@ -25,102 +25,83 @@ const projects = [
 ];
 
 const Projects = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(true);
-  const [ready, setReady] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [muted, setMuted] = useState(false);
+  const [userClosed, setUserClosed] = useState(false);
 
-  // Buffer fully, then play smoothly with sound (fallback to muted if blocked).
-  // Auto-recover from stalls and ensure a seamless loop.
+  // Open the popup automatically when the projects section enters the viewport.
+  // Close + pause when it leaves. User can manually dismiss; won't reopen until they re-enter.
   useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-
-    // Prefer steady playback over latency
-    v.preload = "auto";
-    // Vendor attribute — present in some browsers; safe to assign
-    (v as HTMLVideoElement & { disableRemotePlayback?: boolean }).disableRemotePlayback = true;
-    v.playsInline = true;
-    v.loop = true;
-
-    const tryPlay = async (withSound: boolean) => {
-      try {
-        v.muted = !withSound;
-        if (withSound) v.volume = 1;
-        await v.play();
-        setMuted(!withSound);
-        return true;
-      } catch {
-        return false;
-      }
-    };
-
-    const startWhenBuffered = async () => {
-      // Wait until we have enough data to play through without stalling
-      if (v.readyState < 4) {
-        await new Promise<void>((resolve) => {
-          const onReady = () => {
-            v.removeEventListener("canplaythrough", onReady);
-            resolve();
-          };
-          v.addEventListener("canplaythrough", onReady, { once: true });
-          // Safety timeout — start anyway after 4s
-          setTimeout(resolve, 4000);
-        });
-      }
-      setReady(true);
-      const ok = await tryPlay(true);
-      if (!ok) await tryPlay(false);
-    };
-
-    // Seamless loop: jump just before the very end to avoid the gap
-    const onTimeUpdate = () => {
-      if (v.duration && v.currentTime >= v.duration - 0.05) {
-        v.currentTime = 0;
-        v.play().catch(() => {});
-      }
-    };
-
-    // Stall recovery
-    const onStalled = () => {
-      v.play().catch(() => {});
-    };
-    const onWaiting = () => {
-      // Nudge playback after a brief wait if the buffer recovers
-      setTimeout(() => v.play().catch(() => {}), 250);
-    };
-
-    v.addEventListener("timeupdate", onTimeUpdate);
-    v.addEventListener("stalled", onStalled);
-    v.addEventListener("waiting", onWaiting);
+    const el = sectionRef.current;
+    if (!el) return;
 
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
-            startWhenBuffered();
+          if (e.isIntersecting && e.intersectionRatio > 0.25) {
+            if (!userClosed) setPopupOpen(true);
+          } else {
+            setPopupOpen(false);
+            setUserClosed(false); // re-arm for next entry
           }
         });
       },
-      { threshold: 0.25 }
+      { threshold: [0, 0.25, 0.5] }
     );
-    io.observe(v);
+    io.observe(el);
+    return () => io.disconnect();
+  }, [userClosed]);
 
-    // Try unmuted on first user interaction (browsers often require this)
-    const onFirstInteract = () => {
-      tryPlay(true);
-    };
-    window.addEventListener("pointerdown", onFirstInteract, { once: true });
-    window.addEventListener("keydown", onFirstInteract, { once: true });
+  // Drive the video: try unmuted autoplay, fall back to muted if blocked.
+  // Pause + reset when popup closes to save battery.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
 
-    return () => {
-      io.disconnect();
-      v.removeEventListener("timeupdate", onTimeUpdate);
-      v.removeEventListener("stalled", onStalled);
-      v.removeEventListener("waiting", onWaiting);
-      window.removeEventListener("pointerdown", onFirstInteract);
-      window.removeEventListener("keydown", onFirstInteract);
-    };
-  }, []);
+    if (popupOpen) {
+      v.loop = true;
+      v.playsInline = true;
+      const tryPlay = async (withSound: boolean) => {
+        v.muted = !withSound;
+        if (withSound) v.volume = 1;
+        try {
+          await v.play();
+          setMuted(!withSound);
+          return true;
+        } catch {
+          return false;
+        }
+      };
+      (async () => {
+        const ok = await tryPlay(true);
+        if (!ok) await tryPlay(false);
+      })();
+
+      // Seamless loop guard
+      const onTime = () => {
+        if (v.duration && v.currentTime >= v.duration - 0.05) {
+          v.currentTime = 0;
+          v.play().catch(() => {});
+        }
+      };
+      v.addEventListener("timeupdate", onTime);
+
+      // First user interaction unlocks audio if it was blocked
+      const onInteract = () => {
+        if (v.muted) tryPlay(true);
+      };
+      window.addEventListener("pointerdown", onInteract, { once: true });
+
+      return () => {
+        v.removeEventListener("timeupdate", onTime);
+        window.removeEventListener("pointerdown", onInteract);
+      };
+    } else {
+      v.pause();
+    }
+  }, [popupOpen]);
 
   const toggleSound = () => {
     const v = videoRef.current;
@@ -134,50 +115,65 @@ const Projects = () => {
     setMuted(next);
   };
 
+  const closePopup = () => {
+    setUserClosed(true);
+    setPopupOpen(false);
+  };
+
   return (
-    <section id="projects" className="container relative py-32 lg:py-40">
+    <section ref={sectionRef} id="projects" className="container relative py-32 lg:py-40">
       <SectionTitle eyebrow="Selected Work" title="Projects with intent." />
 
-      {/* Showreel */}
-      <motion.div
-        initial={{ opacity: 0, y: 60, scale: 0.96 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-        className="glass group relative mb-10 overflow-hidden rounded-3xl"
-      >
-        <div className="absolute left-6 top-6 z-10 flex items-center gap-2 rounded-full glass-button px-3 py-1.5 text-xs uppercase tracking-[0.2em]">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-          Showreel
-        </div>
-
-        {/* Sound toggle */}
-        <button
-          type="button"
-          onClick={toggleSound}
-          aria-label={muted ? "Unmute video" : "Mute video"}
-          className="glass-button absolute right-6 top-6 z-10 flex h-10 w-10 items-center justify-center rounded-full"
-        >
-          {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4 text-accent" />}
-        </button>
-
-        {/* Buffering shimmer */}
-        {!ready && (
-          <div className="pointer-events-none absolute inset-0 z-[1] animate-pulse bg-gradient-to-br from-muted/40 via-background/20 to-muted/40" />
+      {/* Floating glassmorphism video popup — auto-opens in view, pauses on exit */}
+      <AnimatePresence>
+        {popupOpen && (
+          <motion.div
+            key="video-popup"
+            initial={{ opacity: 0, y: 40, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 40, scale: 0.95 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            style={{ willChange: "transform, opacity" }}
+            className="fixed bottom-4 right-3 z-[60] w-[min(92vw,420px)] sm:bottom-6 sm:right-6 sm:w-[440px]"
+          >
+            <div className="glass relative overflow-hidden rounded-3xl">
+              <div className="flex items-center justify-between px-4 py-2.5">
+                <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-foreground/80">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+                  Showreel · Live
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={toggleSound}
+                    aria-label={muted ? "Unmute" : "Mute"}
+                    className="glass-button flex h-8 w-8 items-center justify-center rounded-full"
+                  >
+                    {muted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5 text-accent" />}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closePopup}
+                    aria-label="Close video"
+                    className="glass-button flex h-8 w-8 items-center justify-center rounded-full"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+              <video
+                ref={videoRef}
+                src="/my-project.mp4"
+                autoPlay
+                loop
+                playsInline
+                preload="auto"
+                className="aspect-video h-auto w-full object-cover"
+              />
+            </div>
+          </motion.div>
         )}
-
-        <video
-          ref={videoRef}
-          src="/my-project.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-      </motion.div>
+      </AnimatePresence>
 
       <div className="space-y-6">
         {projects.map((p, i) => (
@@ -186,21 +182,21 @@ const Projects = () => {
             href={p.link}
             target="_blank"
             rel="noreferrer"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, delay: i * 0.15 }}
-            className="glass group relative block overflow-hidden rounded-3xl p-8 transition-all duration-500 hover:-translate-y-1 sm:p-12"
+            transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            style={{ willChange: "transform, opacity" }}
+            className="glass group relative block overflow-hidden rounded-3xl p-8 transition-transform duration-300 hover:-translate-y-1 sm:p-12"
           >
-            {/* hover overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-accent/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-accent/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
             <div className="relative grid grid-cols-1 items-center gap-6 lg:grid-cols-12">
               <div className="text-sm text-muted-foreground lg:col-span-1">{p.no}</div>
 
               <div className="lg:col-span-7">
                 <div className="mb-2 text-xs uppercase tracking-[0.25em] text-accent">{p.tag}</div>
-                <h3 className="font-serif text-4xl leading-tight transition-transform duration-500 group-hover:translate-x-2 sm:text-5xl lg:text-6xl">
+                <h3 className="font-serif text-4xl leading-tight transition-transform duration-300 group-hover:translate-x-2 sm:text-5xl lg:text-6xl">
                   {p.name}
                 </h3>
                 <p className="mt-4 max-w-xl text-foreground/70">{p.description}</p>
