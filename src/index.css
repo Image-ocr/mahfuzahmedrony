@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Caveat+Brush&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=Unbounded:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@600;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -130,25 +130,24 @@
 @layer components {
   .glass {
     background: hsl(var(--glass-bg) / 0.05);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid hsl(var(--glass-border) / 0.1);
     box-shadow: var(--shadow-glass);
   }
 
   .glass-button {
     background: hsl(var(--glass-bg) / 0.08);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid hsl(var(--glass-border) / 0.15);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
   }
 
   .glass-button:hover {
     background: hsl(var(--glass-bg) / 0.12);
     border-color: hsl(var(--glass-border) / 0.25);
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
   }
 
   .text-gradient {
@@ -159,9 +158,20 @@
   }
 
   .font-serif {
-    font-family: 'Fraunces', 'Instrument Serif', serif;
+    font-family: 'Fraunces', serif;
     font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 50, "WONK" 1;
+  }
+
+  /* Cheap living-creature breathe — transform/opacity only, GPU friendly */
+  @keyframes social-breathe {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(0, -3px, 0) scale(1.05); }
+  }
+  .social-breathe {
+    animation: social-breathe 4s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .social-breathe { animation: none; }
   }
 
   .grain::after {
@@ -169,8 +179,12 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: 0.04;
+    opacity: 0.035;
     z-index: 100;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* Skip grain on mobile to save paint */
+  @media (max-width: 640px) {
+    .grain::after { display: none; }
   }
 }

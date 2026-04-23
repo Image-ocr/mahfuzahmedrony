@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import heroImg from "@/assets/rony-hero.jpg";
+import heroImg from "@/assets/rony-hero.webp";
 import { ArrowDown, Download, Eye } from "lucide-react";
 
 const statement = [
@@ -33,6 +33,9 @@ const Hero = () => {
         <img
           src={heroImg}
           alt="Mahfuz Ahmed Rony — RONY"
+          fetchPriority="high"
+          decoding="async"
+          loading="eager"
           className="h-full w-full object-cover object-top"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background" />
