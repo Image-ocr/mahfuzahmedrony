@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SectionTitle from "./SectionTitle";
 import { ArrowUpRight, Volume2, VolumeX } from "lucide-react";
 
@@ -27,6 +27,60 @@ const projects = [
 const Projects = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
+
+  // Try to play with sound as soon as the showreel scrolls into view.
+  // Browsers may block unmuted autoplay — we gracefully fall back to muted.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+
+    const tryUnmutedPlay = async () => {
+      try {
+        v.muted = false;
+        v.volume = 1;
+        await v.play();
+        setMuted(false);
+      } catch {
+        // Autoplay with sound blocked → keep muted, will unmute on user click
+        v.muted = true;
+        try {
+          await v.play();
+        } catch {
+          /* ignore */
+        }
+        setMuted(true);
+      }
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            tryUnmutedPlay();
+          } else {
+            v.pause();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(v);
+
+    // Also attempt unmute on first user interaction anywhere
+    const onFirstInteract = () => {
+      tryUnmutedPlay();
+      window.removeEventListener("pointerdown", onFirstInteract);
+      window.removeEventListener("keydown", onFirstInteract);
+    };
+    window.addEventListener("pointerdown", onFirstInteract, { once: true });
+    window.addEventListener("keydown", onFirstInteract, { once: true });
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener("pointerdown", onFirstInteract);
+      window.removeEventListener("keydown", onFirstInteract);
+    };
+  }, []);
 
   const toggleSound = () => {
     const v = videoRef.current;
@@ -71,10 +125,9 @@ const Projects = () => {
           ref={videoRef}
           src="/my-project.mp4"
           autoPlay
-          muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />

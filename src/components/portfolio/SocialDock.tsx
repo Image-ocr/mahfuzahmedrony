@@ -18,7 +18,7 @@ const SocialDock = () => {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 1, delay: 1.6, ease: [0.4, 0, 0.2, 1] }}
-      className="fixed bottom-6 left-4 z-40 flex flex-col items-center gap-3"
+      className="fixed bottom-6 right-4 z-40 flex flex-col items-center gap-3"
       aria-label="Social links"
     >
       {/* living spine */}
