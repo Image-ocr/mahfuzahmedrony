@@ -39,13 +39,13 @@ const Hero = () => {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-background via-background/70 to-transparent" />
       </motion.div>
 
-      {/* Available chip — moved to right edge with green pulse */}
+      {/* Available chip — left side with green pulse */}
       <motion.a
         href="#contact"
-        initial={{ opacity: 0, x: 20 }}
+        initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 1.4 }}
-        className="group fixed right-4 top-24 z-40 sm:top-28"
+        className="group fixed left-4 top-24 z-40 sm:top-28"
       >
         <div className="glass-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-foreground/85 transition-all duration-300 group-hover:scale-105">
           <span className="relative flex h-2 w-2">
