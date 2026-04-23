@@ -49,8 +49,14 @@ const Hero = () => {
       >
         <div className="glass-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-foreground/85 transition-all duration-300 group-hover:scale-105">
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            <span
+              className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+              style={{ background: "hsl(var(--available))" }}
+            />
+            <span
+              className="relative inline-flex h-2 w-2 rounded-full"
+              style={{ background: "hsl(var(--available))" }}
+            />
           </span>
           <span>Available · 2026</span>
         </div>
