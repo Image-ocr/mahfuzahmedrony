@@ -1,10 +1,11 @@
 import { Mail, Facebook, Linkedin, Github } from "lucide-react";
 
+// Exact same links as Contact.tsx — single source of truth for socials
 const links = [
-  { href: "mailto:mahfuzahmedrony@gmail.com", label: "Gmail", Icon: Mail },
-  { href: "https://facebook.com/", label: "Facebook", Icon: Facebook },
-  { href: "https://linkedin.com/", label: "LinkedIn", Icon: Linkedin },
-  { href: "https://github.com/", label: "GitHub", Icon: Github },
+  { href: "mailto:mahfuzahmedrony34@gmail.com", label: "Gmail", Icon: Mail },
+  { href: "https://www.facebook.com/share/1CSycBCdWB/", label: "Facebook", Icon: Facebook },
+  { href: "https://www.linkedin.com/in/mahfuz-ahmed-rony-6353513b4", label: "LinkedIn", Icon: Linkedin },
+  { href: "https://github.com/mahfuzahmedrony34-dev/mahfuzahmedrony34-dev.git", label: "GitHub", Icon: Github },
 ];
 
 /**
