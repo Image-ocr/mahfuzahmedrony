@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Download } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 
 const Nav = () => {
@@ -18,6 +18,14 @@ const Nav = () => {
         </a>
 
         <div className="flex items-center gap-2">
+          <a
+            href="/MyCV.pdf"
+            download="Mahfuz-Ahmed-Rony-CV.pdf"
+            className="glass-button hidden items-center gap-1.5 rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em] sm:inline-flex"
+          >
+            <Download className="h-3.5 w-3.5" />
+            Resume
+          </a>
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
