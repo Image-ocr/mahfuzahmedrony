@@ -27,56 +27,96 @@ const projects = [
 const Projects = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
+  const [ready, setReady] = useState(false);
 
-  // Try to play with sound as soon as the showreel scrolls into view.
-  // Browsers may block unmuted autoplay — we gracefully fall back to muted.
+  // Buffer fully, then play smoothly with sound (fallback to muted if blocked).
+  // Auto-recover from stalls and ensure a seamless loop.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
 
-    const tryUnmutedPlay = async () => {
+    // Prefer steady playback over latency
+    v.preload = "auto";
+    // Vendor attribute — present in some browsers; safe to assign
+    (v as HTMLVideoElement & { disableRemotePlayback?: boolean }).disableRemotePlayback = true;
+    v.playsInline = true;
+    v.loop = true;
+
+    const tryPlay = async (withSound: boolean) => {
       try {
-        v.muted = false;
-        v.volume = 1;
+        v.muted = !withSound;
+        if (withSound) v.volume = 1;
         await v.play();
-        setMuted(false);
+        setMuted(!withSound);
+        return true;
       } catch {
-        // Autoplay with sound blocked → keep muted, will unmute on user click
-        v.muted = true;
-        try {
-          await v.play();
-        } catch {
-          /* ignore */
-        }
-        setMuted(true);
+        return false;
       }
     };
+
+    const startWhenBuffered = async () => {
+      // Wait until we have enough data to play through without stalling
+      if (v.readyState < 4) {
+        await new Promise<void>((resolve) => {
+          const onReady = () => {
+            v.removeEventListener("canplaythrough", onReady);
+            resolve();
+          };
+          v.addEventListener("canplaythrough", onReady, { once: true });
+          // Safety timeout — start anyway after 4s
+          setTimeout(resolve, 4000);
+        });
+      }
+      setReady(true);
+      const ok = await tryPlay(true);
+      if (!ok) await tryPlay(false);
+    };
+
+    // Seamless loop: jump just before the very end to avoid the gap
+    const onTimeUpdate = () => {
+      if (v.duration && v.currentTime >= v.duration - 0.05) {
+        v.currentTime = 0;
+        v.play().catch(() => {});
+      }
+    };
+
+    // Stall recovery
+    const onStalled = () => {
+      v.play().catch(() => {});
+    };
+    const onWaiting = () => {
+      // Nudge playback after a brief wait if the buffer recovers
+      setTimeout(() => v.play().catch(() => {}), 250);
+    };
+
+    v.addEventListener("timeupdate", onTimeUpdate);
+    v.addEventListener("stalled", onStalled);
+    v.addEventListener("waiting", onWaiting);
 
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            tryUnmutedPlay();
-          } else {
-            v.pause();
+            startWhenBuffered();
           }
         });
       },
-      { threshold: 0.4 }
+      { threshold: 0.25 }
     );
     io.observe(v);
 
-    // Also attempt unmute on first user interaction anywhere
+    // Try unmuted on first user interaction (browsers often require this)
     const onFirstInteract = () => {
-      tryUnmutedPlay();
-      window.removeEventListener("pointerdown", onFirstInteract);
-      window.removeEventListener("keydown", onFirstInteract);
+      tryPlay(true);
     };
     window.addEventListener("pointerdown", onFirstInteract, { once: true });
     window.addEventListener("keydown", onFirstInteract, { once: true });
 
     return () => {
       io.disconnect();
+      v.removeEventListener("timeupdate", onTimeUpdate);
+      v.removeEventListener("stalled", onStalled);
+      v.removeEventListener("waiting", onWaiting);
       window.removeEventListener("pointerdown", onFirstInteract);
       window.removeEventListener("keydown", onFirstInteract);
     };
@@ -121,11 +161,17 @@ const Projects = () => {
           {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4 text-accent" />}
         </button>
 
+        {/* Buffering shimmer */}
+        {!ready && (
+          <div className="pointer-events-none absolute inset-0 z-[1] animate-pulse bg-gradient-to-br from-muted/40 via-background/20 to-muted/40" />
+        )}
+
         <video
           ref={videoRef}
           src="/my-project.mp4"
           autoPlay
           loop
+          muted
           playsInline
           preload="auto"
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
