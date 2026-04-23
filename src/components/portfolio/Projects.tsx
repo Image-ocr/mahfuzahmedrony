@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
+import { useRef, useState } from "react";
 import SectionTitle from "./SectionTitle";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Volume2, VolumeX } from "lucide-react";
 
 const projects = [
   {
@@ -24,6 +25,21 @@ const projects = [
 ];
 
 const Projects = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
+
+  const toggleSound = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    const next = !muted;
+    v.muted = next;
+    if (!next) {
+      v.volume = 1;
+      v.play().catch(() => {});
+    }
+    setMuted(next);
+  };
+
   return (
     <section id="projects" className="container relative py-32 lg:py-40">
       <SectionTitle eyebrow="Selected Work" title="Projects with intent." />
@@ -40,7 +56,19 @@ const Projects = () => {
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
           Showreel
         </div>
+
+        {/* Sound toggle */}
+        <button
+          type="button"
+          onClick={toggleSound}
+          aria-label={muted ? "Unmute video" : "Mute video"}
+          className="glass-button absolute right-6 top-6 z-10 flex h-10 w-10 items-center justify-center rounded-full"
+        >
+          {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4 text-accent" />}
+        </button>
+
         <video
+          ref={videoRef}
           src="/my-project.mp4"
           autoPlay
           muted
