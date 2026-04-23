@@ -14,9 +14,11 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Bricolage Grotesque', 'Inter', 'system-ui', 'sans-serif'],
         serif: ['Instrument Serif', 'serif'],
         display: ['Anton', 'Impact', 'sans-serif'],
+        artistic: ['Unbounded', 'Bricolage Grotesque', 'sans-serif'],
+        handwrite: ['Caveat Brush', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",
