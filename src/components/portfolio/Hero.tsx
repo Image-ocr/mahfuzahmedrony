@@ -17,6 +17,21 @@ const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
   const textY = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
+  // RONY split — RO drifts left, NY drifts right as user scrolls.
+  // Scrolling back up returns them to center (natural loop).
+  const roX = useTransform(scrollYProgress, [0, 0.6], ["0vw", "-55vw"]);
+  const nyX = useTransform(scrollYProgress, [0, 0.6], ["0vw", "55vw"]);
+  // Glow strongest when fully visible at top, fades as letters separate.
+  const glow = useTransform(
+    scrollYProgress,
+    [0, 0.25, 0.6],
+    [
+      "0 0 80px hsl(var(--accent) / 0.55), 0 0 160px hsl(var(--accent) / 0.3)",
+      "0 0 40px hsl(var(--accent) / 0.25)",
+      "0 0 0px hsl(var(--accent) / 0)",
+    ]
+  );
+
   // Word reveal flat index counter for staggered timing across all lines
   let wordIndex = 0;
 
