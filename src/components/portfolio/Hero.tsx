@@ -96,16 +96,28 @@ const Hero = () => {
             Portfolio · 26
           </motion.div>
 
-          {/* Big artistic name */}
+          {/* Big artistic name — RO and NY split apart on scroll, glow at rest */}
           <h1 className="font-display uppercase leading-[0.82] tracking-[-0.02em] text-foreground">
-            <motion.span
-              initial={{ y: "110%", opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1.1, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
-              className="block text-[26vw] sm:text-[22vw] lg:text-[18vw]"
-            >
-              RONY
-            </motion.span>
+            <span className="flex w-full items-baseline justify-center text-[26vw] sm:text-[22vw] lg:text-[18vw] will-change-transform">
+              <motion.span
+                initial={{ y: "110%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                style={{ x: roX, textShadow: glow, willChange: "transform" }}
+                className="inline-block"
+              >
+                RO
+              </motion.span>
+              <motion.span
+                initial={{ y: "110%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.28 }}
+                style={{ x: nyX, textShadow: glow, willChange: "transform" }}
+                className="inline-block"
+              >
+                NY
+              </motion.span>
+            </span>
           </h1>
 
           {/* Powerful staggered statement */}
