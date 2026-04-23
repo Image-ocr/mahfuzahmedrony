@@ -37,8 +37,8 @@ const Projects = () => {
 
     // Prefer steady playback over latency
     v.preload = "auto";
-    // @ts-expect-error - vendor attribute, safe on browsers that ignore it
-    v.disableRemotePlayback = true;
+    // Vendor attribute — present in some browsers; safe to assign
+    (v as HTMLVideoElement & { disableRemotePlayback?: boolean }).disableRemotePlayback = true;
     v.playsInline = true;
     v.loop = true;
 
