@@ -9,11 +9,13 @@ import Contact from "@/components/portfolio/Contact";
 import Footer from "@/components/portfolio/Footer";
 import CursorBlob from "@/components/portfolio/CursorBlob";
 import CurtainReveal from "@/components/portfolio/CurtainReveal";
+import SocialDock from "@/components/portfolio/SocialDock";
 
 const Index = () => {
   return (
     <main className="relative min-h-screen overflow-hidden bg-background grain">
       <CursorBlob />
+      <SocialDock />
       <Nav />
       <Hero />
       <CurtainReveal><About /></CurtainReveal>
