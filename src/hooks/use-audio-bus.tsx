@@ -16,7 +16,7 @@ const AudioBusContext = createContext<AudioBusValue | undefined>(undefined);
 
 export const AudioBusProvider = ({ children }: { children: ReactNode }) => {
   const [videoActive, setVideoActive] = useState(false);
-  const [musicMuted, setMusicMuted] = useState(true); // start muted (browser policy)
+  const [musicMuted, setMusicMuted] = useState(false); // intent: play from start (gated by browser autoplay policy)
 
   const toggleMusic = useCallback(() => setMusicMuted((m) => !m), []);
 

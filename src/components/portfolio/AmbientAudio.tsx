@@ -15,22 +15,36 @@ const AmbientAudio = () => {
   const fadeRef = useRef<number | null>(null);
   const { musicMuted, toggleMusic, videoActive } = useAudioBus();
 
-  // Try to start playback after first user interaction (browser policy)
+  // Attempt immediate autoplay on mount; if blocked, start on first user gesture.
   useEffect(() => {
-    const tryPlay = () => {
-      const a = ref.current;
-      if (!a) return;
-      a.volume = 0;
-      a.play().catch(() => {});
-      window.removeEventListener("pointerdown", tryPlay);
-      window.removeEventListener("keydown", tryPlay);
-    };
-    window.addEventListener("pointerdown", tryPlay, { once: true });
-    window.addEventListener("keydown", tryPlay, { once: true });
-    return () => {
-      window.removeEventListener("pointerdown", tryPlay);
-      window.removeEventListener("keydown", tryPlay);
-    };
+    const a = ref.current;
+    if (!a) return;
+
+    // Try unmuted autoplay right away (works on some browsers / repeat visits)
+    a.volume = TARGET_VOLUME;
+    const immediate = a.play();
+    if (immediate && typeof immediate.catch === "function") {
+      immediate.catch(() => {
+        // Blocked by autoplay policy — wait for the very first user gesture
+        const tryPlay = () => {
+          if (!ref.current) return;
+          ref.current.volume = TARGET_VOLUME;
+          ref.current.play().catch(() => {});
+          cleanup();
+        };
+        const cleanup = () => {
+          window.removeEventListener("pointerdown", tryPlay);
+          window.removeEventListener("touchstart", tryPlay);
+          window.removeEventListener("keydown", tryPlay);
+          window.removeEventListener("scroll", tryPlay);
+        };
+        window.addEventListener("pointerdown", tryPlay, { once: true });
+        window.addEventListener("touchstart", tryPlay, { once: true, passive: true });
+        window.addEventListener("keydown", tryPlay, { once: true });
+        window.addEventListener("scroll", tryPlay, { once: true, passive: true });
+        return cleanup;
+      });
+    }
   }, []);
 
   // Smooth fade in/out based on muted + videoActive state
