@@ -15,27 +15,34 @@ const Contact = lazy(() => import("@/components/portfolio/Contact"));
 const Footer = lazy(() => import("@/components/portfolio/Footer"));
 const CursorBlob = lazy(() => import("@/components/portfolio/CursorBlob"));
 const Marquee = lazy(() => import("@/components/portfolio/Marquee"));
+const AmbientAudio = lazy(() => import("@/components/portfolio/AmbientAudio"));
+const TouchRipple = lazy(() => import("@/components/portfolio/TouchRipple"));
 
 const Index = () => {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background grain">
+    <main className="snap-root relative min-h-screen overflow-x-hidden bg-background grain">
       <Suspense fallback={null}>
         <CursorBlob />
+        <TouchRipple />
+        <AmbientAudio />
       </Suspense>
       <SocialDock />
       <Nav />
       <ScrollRail />
-      <Hero />
+
+      <div className="snap-section"><Hero /></div>
+
       <Suspense fallback={<div className="min-h-[60vh]" />}>
-        <CurtainReveal><About /></CurtainReveal>
-        <CurtainReveal><Skills /></CurtainReveal>
-        <CurtainReveal><Education /></CurtainReveal>
-        <CurtainReveal><Projects /></CurtainReveal>
-        <CurtainReveal><ProjectVideo /></CurtainReveal>
-        <CurtainReveal><Experience /></CurtainReveal>
-        <CurtainReveal><Contact /></CurtainReveal>
+        <div className="snap-section"><CurtainReveal><About /></CurtainReveal></div>
+        <div className="snap-section"><CurtainReveal><Skills /></CurtainReveal></div>
+        <div className="snap-section"><CurtainReveal><Education /></CurtainReveal></div>
+        <div className="snap-section"><CurtainReveal><Projects /></CurtainReveal></div>
+        <div className="snap-section"><CurtainReveal><ProjectVideo /></CurtainReveal></div>
+        <div className="snap-section"><CurtainReveal><Experience /></CurtainReveal></div>
+        <div className="snap-section"><CurtainReveal><Contact /></CurtainReveal></div>
         <Footer />
       </Suspense>
+
       {/* Floating bottom marquee — appears once Hero is passed, persists across rest of page */}
       <Suspense fallback={null}>
         <Marquee />

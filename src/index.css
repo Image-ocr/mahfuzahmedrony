@@ -100,44 +100,44 @@
     --shadow-glow: 0 0 60px hsl(38 65% 62% / 0.25);
   }
 
-  /* RED MODE — bold, premium crimson cinematic */
+  /* RED MODE — bold, vivid, original red. Premium luxury identity. */
   .red {
-    --background: 0 35% 6%;
-    --foreground: 0 25% 96%;
+    --background: 0 92% 50%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 30% 9%;
-    --card-foreground: 0 25% 96%;
+    --card: 0 85% 46%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 30% 9%;
-    --popover-foreground: 0 25% 96%;
+    --popover: 0 85% 42%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 0 25% 96%;
-    --primary-foreground: 0 35% 6%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 92% 45%;
 
-    --secondary: 0 30% 12%;
-    --secondary-foreground: 0 25% 96%;
+    --secondary: 0 80% 44%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 25% 14%;
-    --muted-foreground: 0 15% 70%;
+    --muted: 0 70% 42%;
+    --muted-foreground: 0 0% 96%;
 
-    --accent: 0 85% 60%;
-    --accent-foreground: 0 25% 96%;
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 92% 45%;
 
-    --border: 0 25% 18%;
-    --input: 0 25% 18%;
-    --ring: 0 85% 60%;
+    --border: 0 0% 100%;
+    --input: 0 0% 100%;
+    --ring: 0 0% 100%;
 
-    --available: 152 70% 55%;
+    --available: 60 100% 70%;
 
-    --glass-bg: 0 80% 70%;
-    --glass-border: 0 80% 80%;
+    --glass-bg: 0 0% 100%;
+    --glass-border: 0 0% 100%;
 
-    --gradient-radial: radial-gradient(ellipse at top, hsl(0 70% 25% / 0.5), transparent 60%);
-    --gradient-text: linear-gradient(180deg, hsl(0 25% 98%), hsl(0 30% 78%));
-    --gradient-accent: linear-gradient(135deg, hsl(0 85% 60%), hsl(355 80% 50%));
+    --gradient-radial: radial-gradient(ellipse at top, hsl(0 100% 60% / 0.55), transparent 60%);
+    --gradient-text: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 92%));
+    --gradient-accent: linear-gradient(135deg, hsl(0 0% 100%), hsl(50 100% 85%));
 
-    --shadow-glass: 0 8px 32px 0 hsl(0 70% 10% / 0.5);
-    --shadow-glow: 0 0 60px hsl(0 85% 60% / 0.35);
+    --shadow-glass: 0 8px 32px 0 hsl(0 80% 20% / 0.35);
+    --shadow-glow: 0 0 60px hsl(0 0% 100% / 0.45);
   }
 }
 
@@ -185,6 +185,21 @@
     background: hsl(var(--glass-bg) / 0.12);
     border-color: hsl(var(--glass-border) / 0.25);
     transform: translateY(-2px);
+  }
+
+  /* Red mode: brighter frosted-white glass for visibility on vivid red */
+  .red .glass {
+    background: hsl(0 0% 100% / 0.12);
+    border-color: hsl(0 0% 100% / 0.28);
+    box-shadow: 0 8px 32px 0 hsl(0 80% 20% / 0.35), inset 0 1px 0 hsl(0 0% 100% / 0.18);
+  }
+  .red .glass-button {
+    background: hsl(0 0% 100% / 0.14);
+    border-color: hsl(0 0% 100% / 0.3);
+  }
+  .red .glass-button:hover {
+    background: hsl(0 0% 100% / 0.22);
+    border-color: hsl(0 0% 100% / 0.45);
   }
 
   .text-gradient {
@@ -285,5 +300,39 @@
   }
   @media (max-width: 640px) {
     .grain::after { display: none; }
+  }
+
+  /* Scroll-snap section system — gentle, mobile-friendly */
+  .snap-root {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 6rem;
+  }
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+  @media (max-width: 768px) {
+    .snap-root { scroll-snap-type: y proximity; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .snap-root { scroll-snap-type: none; }
+  }
+
+  /* Touch ripple glow (mobile) */
+  @keyframes touch-ripple {
+    0%   { transform: translate(-50%, -50%) scale(0.2); opacity: 0.6; }
+    100% { transform: translate(-50%, -50%) scale(2.4);  opacity: 0; }
+  }
+  .touch-ripple {
+    position: fixed;
+    width: 120px;
+    height: 120px;
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 70;
+    background: radial-gradient(circle, hsl(var(--accent) / 0.55), hsl(var(--accent) / 0) 70%);
+    mix-blend-mode: screen;
+    animation: touch-ripple 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    will-change: transform, opacity;
   }
 }

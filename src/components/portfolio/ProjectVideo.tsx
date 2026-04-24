@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import SectionTitle from "./SectionTitle";
 import { Volume2, VolumeX } from "lucide-react";
+import { useAudioBus } from "@/hooks/use-audio-bus";
 
 const YT_ID = "MCBswubNBR8";
 const ytSrc = (sound: boolean) =>
@@ -11,11 +12,16 @@ const ytSrc = (sound: boolean) =>
  * Dedicated project video player section.
  * Mounts the iframe only when scrolled into view (mobile-friendly,
  * no background playback, no jank). Centered glass carousel layout.
+ *
+ * Coordinates with the AudioBus: when the user unmutes the video AND it's
+ * in view, ambient music auto-fades out. When out of view or muted, music
+ * resumes (if the user has enabled it).
  */
 const ProjectVideo = () => {
   const ref = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
   const [sound, setSound] = useState(false);
+  const { setVideoActive } = useAudioBus();
 
   useEffect(() => {
     const el = ref.current;
@@ -27,6 +33,12 @@ const ProjectVideo = () => {
     io.observe(el);
     return () => io.disconnect();
   }, []);
+
+  // Tell the audio bus when this video is "active" (in view AND unmuted)
+  useEffect(() => {
+    setVideoActive(inView && sound);
+    return () => setVideoActive(false);
+  }, [inView, sound, setVideoActive]);
 
   return (
     <section
