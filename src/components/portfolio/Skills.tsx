@@ -23,7 +23,7 @@ const groups = [
 const Skills = () => {
   return (
     <section id="skills" className="container relative py-32 lg:py-40">
-      <SectionTitle eyebrow="Capabilities" title="Three lenses, one mind." />
+      <SectionTitle eyebrow="Capabilities" title="Three lenses, one mind." highlight="48 100% 60%" />
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {groups.map((g, gi) => (

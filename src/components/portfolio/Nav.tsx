@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, Download, X, Menu as MenuIcon } from "lucide-react";
+import { Moon, Sun, Flame, Download, X, Menu as MenuIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/use-theme";
 
@@ -14,7 +14,7 @@ const sections = [
 ];
 
 const Nav = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, cycleTheme } = useTheme();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -23,11 +23,14 @@ const Nav = () => {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  const ThemeIcon = theme === "dark" ? Sun : theme === "light" ? Flame : Moon;
+  const nextLabel = theme === "dark" ? "Light" : theme === "light" ? "Red" : "Dark";
+
   return (
     <motion.header
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
       className="fixed top-4 left-0 right-0 z-50 px-4 sm:top-6"
     >
       <div className="container flex items-center justify-between">
@@ -49,7 +52,7 @@ const Nav = () => {
                 initial={{ opacity: 0, y: -8, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.98 }}
-                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
                 style={{ willChange: "transform, opacity" }}
                 className="glass absolute left-0 top-12 w-56 rounded-2xl p-2"
               >
@@ -59,7 +62,7 @@ const Nav = () => {
                       <a
                         href={s.href}
                         onClick={() => setOpen(false)}
-                        className="group flex items-center justify-between rounded-xl px-4 py-2.5 text-xs uppercase tracking-[0.22em] text-foreground/85 transition-colors duration-200 hover:bg-foreground/5 hover:text-accent"
+                        className="group flex items-center justify-between rounded-xl px-4 py-2.5 text-xs uppercase tracking-[0.22em] text-foreground/85 transition-colors duration-150 hover:bg-foreground/5 hover:text-accent"
                       >
                         <span>{s.label}</span>
                         <span className="text-[10px] text-muted-foreground">0{i + 1}</span>
@@ -82,11 +85,12 @@ const Nav = () => {
             Resume
           </a>
           <button
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className="glass-button flex h-9 w-9 items-center justify-center rounded-full"
+            onClick={cycleTheme}
+            aria-label={`Switch to ${nextLabel} mode`}
+            title={`Switch to ${nextLabel} mode`}
+            className="glass-button flex h-9 w-9 items-center justify-center rounded-full transition-transform active:scale-95"
           >
-            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            <ThemeIcon className="h-4 w-4" />
           </button>
           <a href="#contact" className="glass-button rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em]">
             Contact
