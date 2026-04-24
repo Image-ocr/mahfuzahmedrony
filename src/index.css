@@ -187,6 +187,21 @@
     transform: translateY(-2px);
   }
 
+  /* Red mode: brighter frosted-white glass for visibility on vivid red */
+  .red .glass {
+    background: hsl(0 0% 100% / 0.12);
+    border-color: hsl(0 0% 100% / 0.28);
+    box-shadow: 0 8px 32px 0 hsl(0 80% 20% / 0.35), inset 0 1px 0 hsl(0 0% 100% / 0.18);
+  }
+  .red .glass-button {
+    background: hsl(0 0% 100% / 0.14);
+    border-color: hsl(0 0% 100% / 0.3);
+  }
+  .red .glass-button:hover {
+    background: hsl(0 0% 100% / 0.22);
+    border-color: hsl(0 0% 100% / 0.45);
+  }
+
   .text-gradient {
     background: var(--gradient-text);
     -webkit-background-clip: text;
