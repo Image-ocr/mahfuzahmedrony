@@ -1,7 +1,7 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import SectionTitle from "./SectionTitle";
-import { ArrowUpRight, X, Volume2, VolumeX, Play } from "lucide-react";
+import { ArrowUpRight, Play } from "lucide-react";
 import jurismindImg from "@/assets/project-jurismind.png";
 import messwalletImg from "@/assets/project-messwallet.png";
 
@@ -28,101 +28,10 @@ const projects = [
   },
 ];
 
-const YT_ID = "MCBswubNBR8";
-const ytSrc = (sound: boolean) =>
-  `https://www.youtube-nocookie.com/embed/${YT_ID}?autoplay=1&mute=${sound ? 0 : 1}&loop=1&playlist=${YT_ID}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&playsinline=1&disablekb=1&fs=0`;
-
 const Projects = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [popupOpen, setPopupOpen] = useState(false);
-  const [userClosed, setUserClosed] = useState(false);
-  const [sound, setSound] = useState(false); // OFF by default
-
-  // Open popup automatically when projects section is in view
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting && e.intersectionRatio > 0.25) {
-            if (!userClosed) setPopupOpen(true);
-          } else {
-            setPopupOpen(false);
-            setUserClosed(false);
-          }
-        });
-      },
-      { threshold: [0, 0.25, 0.5] }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [userClosed]);
-
-  const closePopup = () => {
-    setUserClosed(true);
-    setPopupOpen(false);
-  };
-
   return (
-    <section ref={sectionRef} id="projects" className="container relative py-32 lg:py-40">
+    <section id="projects" className="container relative py-32 lg:py-40">
       <SectionTitle eyebrow="Selected Work" title="Projects with intent." highlight="280 80% 65%" />
-
-      {/* Floating glassmorphism YouTube popup */}
-      <AnimatePresence>
-        {popupOpen && (
-          <motion.div
-            key="yt-popup"
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.97 }}
-            transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-            style={{ willChange: "transform, opacity" }}
-            className="fixed bottom-4 right-3 z-[60] w-[min(92vw,420px)] sm:bottom-6 sm:right-6 sm:w-[440px]"
-          >
-            <div className="glass relative overflow-hidden rounded-3xl">
-              <div className="flex items-center justify-between px-4 py-2.5">
-                <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-foreground/80">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-                  Showreel · Live
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => setSound((s) => !s)}
-                    aria-label={sound ? "Mute" : "Unmute"}
-                    title={sound ? "Mute" : "Unmute"}
-                    className="glass-button flex h-8 w-8 items-center justify-center rounded-full transition-transform active:scale-95"
-                  >
-                    {sound ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={closePopup}
-                    aria-label="Close video"
-                    className="glass-button flex h-8 w-8 items-center justify-center rounded-full"
-                  >
-                    <X className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-              </div>
-              <div className="relative w-full" style={{ aspectRatio: "16 / 9" }}>
-                <iframe
-                  key={sound ? "snd" : "mute"}
-                  src={ytSrc(sound)}
-                  title="Project showreel"
-                  loading="lazy"
-                  allow="autoplay; encrypted-media; picture-in-picture"
-                  allowFullScreen={false}
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  className="absolute inset-0 h-full w-full border-0"
-                />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {projects.map((p, i) => (
@@ -138,8 +47,30 @@ interface CardProps {
   index: number;
 }
 
+const AUTO_CLOSE_MS = 5000;
+
 const ProjectCard = ({ project, index }: CardProps) => {
   const [open, setOpen] = useState(false);
+  const timerRef = useRef<number | null>(null);
+
+  // Auto-close 5s after opening; reset cleanly on re-open.
+  useEffect(() => {
+    if (timerRef.current != null) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    if (open) {
+      timerRef.current = window.setTimeout(() => setOpen(false), AUTO_CLOSE_MS);
+    }
+    return () => {
+      if (timerRef.current != null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [open]);
+
+  const toggle = () => setOpen((v) => !v);
 
   return (
     <motion.div
@@ -152,7 +83,7 @@ const ProjectCard = ({ project, index }: CardProps) => {
     >
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggle}
         aria-expanded={open}
         className={`relative block w-full overflow-hidden rounded-3xl text-left transition-transform duration-200 active:scale-[0.99] ${open ? "split-open" : ""}`}
       >

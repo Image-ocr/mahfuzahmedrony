@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SectionTitle from "./SectionTitle";
 import iuLogo from "@/assets/edu-iu.png";
 import scpscLogo from "@/assets/edu-scpsc.png";
 import { ExternalLink } from "lucide-react";
+
+const AUTO_CLOSE_MS = 5000;
 
 const items = [
   {
@@ -26,6 +28,24 @@ const items = [
 
 const Education = () => {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const timerRef = useRef<number | null>(null);
+
+  // Auto-close any opened card after 5s; resets cleanly on re-open.
+  useEffect(() => {
+    if (timerRef.current != null) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    if (openIdx !== null) {
+      timerRef.current = window.setTimeout(() => setOpenIdx(null), AUTO_CLOSE_MS);
+    }
+    return () => {
+      if (timerRef.current != null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [openIdx]);
 
   return (
     <section id="education" className="container relative py-32 lg:py-40">
