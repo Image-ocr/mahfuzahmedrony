@@ -107,7 +107,7 @@ const ProjectCard = ({ project, index, open, onToggle }: CardProps) => {
           onClick={(e) => {
             if (!open) {
               e.preventDefault();
-              setOpen(true);
+              onToggle();
             }
             e.stopPropagation();
           }}
