@@ -28,14 +28,46 @@ const projects = [
   },
 ];
 
+const AUTO_CLOSE_MS = 5000;
+
 const Projects = () => {
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const timerRef = useRef<number | null>(null);
+
+  // Manage a single auto-close timer for whichever card is active.
+  useEffect(() => {
+    if (timerRef.current != null) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    if (activeId) {
+      timerRef.current = window.setTimeout(() => setActiveId(null), AUTO_CLOSE_MS);
+    }
+    return () => {
+      if (timerRef.current != null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [activeId]);
+
+  const handleToggle = (id: string) => {
+    setActiveId((current) => (current === id ? null : id));
+  };
+
   return (
     <section id="projects" className="container relative py-32 lg:py-40">
       <SectionTitle eyebrow="Selected Work" title="Projects with intent." highlight="280 80% 65%" />
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {projects.map((p, i) => (
-          <ProjectCard key={p.name} project={p} index={i} />
+          <ProjectCard
+            key={p.name}
+            project={p}
+            index={i}
+            open={activeId === p.name}
+            onToggle={() => handleToggle(p.name)}
+          />
         ))}
       </div>
     </section>
@@ -45,32 +77,12 @@ const Projects = () => {
 interface CardProps {
   project: (typeof projects)[number];
   index: number;
+  open: boolean;
+  onToggle: () => void;
 }
 
-const AUTO_CLOSE_MS = 5000;
-
-const ProjectCard = ({ project, index }: CardProps) => {
-  const [open, setOpen] = useState(false);
-  const timerRef = useRef<number | null>(null);
-
-  // Auto-close 5s after opening; reset cleanly on re-open.
-  useEffect(() => {
-    if (timerRef.current != null) {
-      window.clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-    if (open) {
-      timerRef.current = window.setTimeout(() => setOpen(false), AUTO_CLOSE_MS);
-    }
-    return () => {
-      if (timerRef.current != null) {
-        window.clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, [open]);
-
-  const toggle = () => setOpen((v) => !v);
+const ProjectCard = ({ project, index, open, onToggle }: CardProps) => {
+  const toggle = onToggle;
 
   return (
     <motion.div
@@ -95,7 +107,7 @@ const ProjectCard = ({ project, index }: CardProps) => {
           onClick={(e) => {
             if (!open) {
               e.preventDefault();
-              setOpen(true);
+              onToggle();
             }
             e.stopPropagation();
           }}
