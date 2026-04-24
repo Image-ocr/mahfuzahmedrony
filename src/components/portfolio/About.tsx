@@ -8,7 +8,11 @@ const About = () => {
 
   return (
     <section id="about" className="container relative py-32 lg:py-40">
-      <SectionTitle eyebrow="About" title="A quiet practice in three disciplines." />
+      <SectionTitle
+        eyebrow="About"
+        title="A quiet practice in three disciplines."
+        highlight="0 85% 60%"
+      />
 
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
         <div className="lg:col-span-7 lg:col-start-2">
@@ -23,7 +27,7 @@ const About = () => {
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="lg:col-span-3"
         >
           <div className="glass rounded-2xl p-6">

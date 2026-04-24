@@ -19,7 +19,7 @@ const items = [
 const Experience = () => {
   return (
     <section id="experience" className="container relative py-32 lg:py-40">
-      <SectionTitle eyebrow="Experience" title="What I've been building." />
+      <SectionTitle eyebrow="Experience" title="What I've been building." highlight="195 90% 60%" />
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {items.map((it, i) => (
