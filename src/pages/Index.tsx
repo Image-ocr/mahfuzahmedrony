@@ -9,6 +9,7 @@ const About = lazy(() => import("@/components/portfolio/About"));
 const Skills = lazy(() => import("@/components/portfolio/Skills"));
 const Education = lazy(() => import("@/components/portfolio/Education"));
 const Projects = lazy(() => import("@/components/portfolio/Projects"));
+const ProjectVideo = lazy(() => import("@/components/portfolio/ProjectVideo"));
 const Experience = lazy(() => import("@/components/portfolio/Experience"));
 const Contact = lazy(() => import("@/components/portfolio/Contact"));
 const Footer = lazy(() => import("@/components/portfolio/Footer"));
@@ -29,15 +30,15 @@ const Index = () => {
         <CurtainReveal><About /></CurtainReveal>
         <CurtainReveal><Skills /></CurtainReveal>
         <CurtainReveal><Education /></CurtainReveal>
-        <CurtainReveal>
-          <div className="container">
-            <Marquee />
-          </div>
-        </CurtainReveal>
         <CurtainReveal><Projects /></CurtainReveal>
+        <CurtainReveal><ProjectVideo /></CurtainReveal>
         <CurtainReveal><Experience /></CurtainReveal>
         <CurtainReveal><Contact /></CurtainReveal>
         <Footer />
+      </Suspense>
+      {/* Floating bottom marquee — appears once Hero is passed, persists across rest of page */}
+      <Suspense fallback={null}>
+        <Marquee />
       </Suspense>
     </main>
   );

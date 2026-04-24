@@ -45,7 +45,7 @@ const ScrollRail = () => {
   return (
     <div
       aria-hidden="true"
-      className={`fixed bottom-3 left-1/2 z-40 h-[3px] w-[min(70vw,520px)] -translate-x-1/2 overflow-hidden rounded-full transition-opacity duration-300 ${active ? "opacity-100" : "opacity-0"}`}
+      className={`fixed bottom-16 left-1/2 z-40 h-[3px] w-[min(70vw,520px)] -translate-x-1/2 overflow-hidden rounded-full transition-opacity duration-300 sm:bottom-20 ${active ? "opacity-100" : "opacity-0"}`}
       style={{ background: "hsl(var(--glass-bg) / 0.08)", backdropFilter: "blur(8px)" }}
     >
       <div
