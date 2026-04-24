@@ -301,4 +301,38 @@
   @media (max-width: 640px) {
     .grain::after { display: none; }
   }
+
+  /* Scroll-snap section system — gentle, mobile-friendly */
+  .snap-root {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 6rem;
+  }
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+  @media (max-width: 768px) {
+    .snap-root { scroll-snap-type: y proximity; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .snap-root { scroll-snap-type: none; }
+  }
+
+  /* Touch ripple glow (mobile) */
+  @keyframes touch-ripple {
+    0%   { transform: translate(-50%, -50%) scale(0.2); opacity: 0.6; }
+    100% { transform: translate(-50%, -50%) scale(2.4);  opacity: 0; }
+  }
+  .touch-ripple {
+    position: fixed;
+    width: 120px;
+    height: 120px;
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 70;
+    background: radial-gradient(circle, hsl(var(--accent) / 0.55), hsl(var(--accent) / 0) 70%);
+    mix-blend-mode: screen;
+    animation: touch-ripple 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    will-change: transform, opacity;
+  }
 }
