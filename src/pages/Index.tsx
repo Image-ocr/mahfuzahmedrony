@@ -1,4 +1,5 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Seo from "@/components/Seo";
 import Nav from "@/components/portfolio/Nav";
 import Hero from "@/components/portfolio/Hero";
@@ -19,14 +20,91 @@ const Marquee = lazy(() => import("@/components/portfolio/Marquee"));
 const AmbientAudio = lazy(() => import("@/components/portfolio/AmbientAudio"));
 const TouchRipple = lazy(() => import("@/components/portfolio/TouchRipple"));
 
+type RouteSeo = {
+  title: string;
+  description: string;
+  path: string;
+  sectionId?: string;
+};
+
+const ROUTE_SEO: Record<string, RouteSeo> = {
+  "/": {
+    title: "Mahfuz Ahmed Rony | Portfolio | Web Developer, Designer & Lawyer",
+    description:
+      "Mahfuz Ahmed Rony (Rony) is a portfolio of a web developer, graphics designer and law student from Bangladesh. Explore projects, design work, skills and experience.",
+    path: "/",
+  },
+  "/about": {
+    title: "Mahfuz Ahmed Rony | About | Web Developer, Designer & Law Student",
+    description:
+      "Learn about Mahfuz Ahmed Rony, a web developer, graphics designer, and law student from Bangladesh passionate about building elegant digital experiences.",
+    path: "/about",
+    sectionId: "about",
+  },
+  "/capabilities": {
+    title: "Mahfuz Ahmed Rony | Skills & Capabilities",
+    description:
+      "Discover the skills and capabilities of Mahfuz Ahmed Rony — web development, graphics design, and modern UI engineering from Bangladesh.",
+    path: "/capabilities",
+    sectionId: "skills",
+  },
+  "/education": {
+    title: "Mahfuz Ahmed Rony | Education | Islamic University & SCPSC",
+    description:
+      "Educational background of Mahfuz Ahmed Rony, law student at Islamic University Bangladesh and alumnus of Sirajganj Cantonment Public School & College.",
+    path: "/education",
+    sectionId: "education",
+  },
+  "/projects": {
+    title: "Mahfuz Ahmed Rony | Projects Portfolio",
+    description:
+      "Explore projects by Mahfuz Ahmed Rony including web development, UI design and graphics work crafted with a futuristic, premium aesthetic.",
+    path: "/projects",
+    sectionId: "projects",
+  },
+  "/experience": {
+    title: "Mahfuz Ahmed Rony | Experience",
+    description:
+      "Professional experience of Mahfuz Ahmed Rony — web developer, designer and law student from Bangladesh delivering polished digital products.",
+    path: "/experience",
+    sectionId: "experience",
+  },
+  "/contact": {
+    title: "Mahfuz Ahmed Rony | Contact",
+    description:
+      "Get in touch with Mahfuz Ahmed Rony for web development, graphics design, and collaboration opportunities from Bangladesh and worldwide.",
+    path: "/contact",
+    sectionId: "contact",
+  },
+};
+
 const Index = () => {
+  const { pathname } = useLocation();
+  const seo = ROUTE_SEO[pathname] ?? ROUTE_SEO["/"];
+
+  useEffect(() => {
+    if (!seo.sectionId) return;
+    let cancelled = false;
+    const tryScroll = (attempt: number) => {
+      if (cancelled) return;
+      const el = document.getElementById(seo.sectionId!);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else if (attempt < 20) {
+        setTimeout(() => tryScroll(attempt + 1), 150);
+      }
+    };
+    // Wait a tick so lazy sections can mount
+    const t = setTimeout(() => tryScroll(0), 200);
+    return () => {
+      cancelled = true;
+      clearTimeout(t);
+    };
+  }, [seo.sectionId]);
+
   return (
     <main className="snap-root relative min-h-screen overflow-x-hidden bg-background grain">
-      <Seo
-        title="Mahfuz Ahmed Rony | Portfolio | Web Developer, Designer & Lawyer"
-        description="Mahfuz Ahmed Rony (Rony) is a portfolio of a web developer, graphics designer and law student from Bangladesh. Explore projects, design work, skills and experience."
-        path="/"
-      />
+      <Seo title={seo.title} description={seo.description} path={seo.path} />
       <Suspense fallback={null}>
         <CursorBlob />
         <TouchRipple />
