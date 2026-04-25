@@ -24,6 +24,12 @@ const App = () => (
             <Suspense fallback={null}>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/about" element={<Index />} />
+                <Route path="/capabilities" element={<Index />} />
+                <Route path="/education" element={<Index />} />
+                <Route path="/projects" element={<Index />} />
+                <Route path="/experience" element={<Index />} />
+                <Route path="/contact" element={<Index />} />
                 <Route path="/install" element={<Install />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
