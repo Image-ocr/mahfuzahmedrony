@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Download, Smartphone, Share2 } from "lucide-react";
+import Seo from "@/components/Seo";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -39,6 +40,11 @@ const Install = () => {
 
   return (
     <main className="min-h-[100svh] bg-background text-foreground">
+      <Seo
+        title="Install RONY App | Mahfuz Ahmed Rony Portfolio"
+        description="Install Mahfuz Ahmed Rony's portfolio as an app on your phone or desktop for a fullscreen, app-like experience."
+        path="/install"
+      />
       <section className="container flex min-h-[100svh] flex-col items-center justify-center py-20">
         <div className="glass mx-auto w-full max-w-xl rounded-3xl p-8 text-center sm:p-12">
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent/15">
