@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import Seo from "@/components/Seo";
 import Nav from "@/components/portfolio/Nav";
 import Hero from "@/components/portfolio/Hero";
 import SocialDock from "@/components/portfolio/SocialDock";
@@ -21,6 +22,11 @@ const TouchRipple = lazy(() => import("@/components/portfolio/TouchRipple"));
 const Index = () => {
   return (
     <main className="snap-root relative min-h-screen overflow-x-hidden bg-background grain">
+      <Seo
+        title="Mahfuz Ahmed Rony | Portfolio | Web Developer, Designer & Lawyer"
+        description="Mahfuz Ahmed Rony (Rony) is a portfolio of a web developer, graphics designer and law student from Bangladesh. Explore projects, design work, skills and experience."
+        path="/"
+      />
       <Suspense fallback={null}>
         <CursorBlob />
         <TouchRipple />
