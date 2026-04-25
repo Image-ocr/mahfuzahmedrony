@@ -1,13 +1,15 @@
 {
-  "name": "RONY — Mahfuz Ahmed Rony",
+  "name": "Mahfuz Ahmed Rony — Portfolio",
   "short_name": "RONY",
-  "description": "Mahfuz Ahmed Rony — Law · Web · Design portfolio.",
+  "description": "Portfolio of Mahfuz Ahmed Rony — web developer, graphics designer and law student from Bangladesh.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0a0a0a",
   "theme_color": "#0a0a0a",
+  "lang": "en",
+  "categories": ["portfolio", "design", "productivity"],
   "icons": [
     {
       "src": "/icon-512.png",
