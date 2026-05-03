@@ -336,3 +336,7 @@
     will-change: transform, opacity;
   }
 }
+
+/* Hide scrollbar (used by Designs carousel) */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

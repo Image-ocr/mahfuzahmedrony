@@ -2,15 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { Users } from "lucide-react";
 
 /**
- * Real visitor counter — uniqueness via localStorage flag + free remote
- * persistent counter (abacus.jasoncameron.dev). Returning visitors only "get"
- * the current value; new visitors "hit" it once to increment by 1.
- *
- * Namespace is fixed per deployment so the count is shared across all users.
+ * Visitor counter — base 14610 + unique device hits via remote persistent
+ * counter (abacus.jasoncameron.dev). Each device counts only once via
+ * localStorage flag.
  */
 const NS = "rony-portfolio";
 const KEY = "visits";
-const FLAG = "rp_visited_v1";
+const FLAG = "rp_visited_v2";
+const BASE = 14610;
 
 const fmt = (n: number) => n.toLocaleString();
 
@@ -31,12 +30,11 @@ const VisitorCounter = () => {
       .then((data: { value: number }) => {
         if (cancelled) return;
         if (!isReturning) localStorage.setItem(FLAG, "1");
-        setCount(data.value);
+        setCount(BASE + data.value);
       })
       .catch(() => {
         if (cancelled) return;
-        // Graceful fallback so the component still renders something elegant.
-        setCount(1);
+        setCount(BASE);
         if (!isReturning) localStorage.setItem(FLAG, "1");
       });
     return () => {
@@ -44,13 +42,12 @@ const VisitorCounter = () => {
     };
   }, []);
 
-  // Animated counting-up
   useEffect(() => {
     if (count == null) return;
     const start = performance.now();
     const from = 0;
     const to = count;
-    const duration = 900;
+    const duration = 1100;
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 3);

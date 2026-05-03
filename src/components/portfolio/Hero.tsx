@@ -6,7 +6,7 @@ import { ArrowDown, Download, Eye } from "lucide-react";
 const statement = [
   ["Designing", "systems."],
   ["Building", "interfaces."],
-  ["Also", "a", "passionate", "lawyer."],
+  ["Also", "a", "passionate", "law", "student."],
 ];
 
 const Hero = () => {
@@ -183,7 +183,7 @@ const Hero = () => {
               className="glass-button group inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-medium uppercase tracking-[0.2em] sm:text-sm"
             >
               <Download className="h-3.5 w-3.5 transition-transform group-hover:translate-y-0.5" />
-              Resume
+              Download CV
             </motion.a>
             <motion.a
               href="/MyCV.pdf"

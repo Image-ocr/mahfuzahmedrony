@@ -12,6 +12,8 @@ const Skills = lazy(() => import("@/components/portfolio/Skills"));
 const Education = lazy(() => import("@/components/portfolio/Education"));
 const Projects = lazy(() => import("@/components/portfolio/Projects"));
 const ProjectVideo = lazy(() => import("@/components/portfolio/ProjectVideo"));
+const DesignsCarousel = lazy(() => import("@/components/portfolio/DesignsCarousel"));
+const HeartCounter = lazy(() => import("@/components/portfolio/HeartCounter"));
 const Experience = lazy(() => import("@/components/portfolio/Experience"));
 const Contact = lazy(() => import("@/components/portfolio/Contact"));
 const Footer = lazy(() => import("@/components/portfolio/Footer"));
@@ -122,8 +124,10 @@ const Index = () => {
         <div className="snap-section"><CurtainReveal><Education /></CurtainReveal></div>
         <div className="snap-section"><CurtainReveal><Projects /></CurtainReveal></div>
         <div className="snap-section"><CurtainReveal><ProjectVideo /></CurtainReveal></div>
+        <div className="snap-section"><CurtainReveal><DesignsCarousel /></CurtainReveal></div>
         <div className="snap-section"><CurtainReveal><Experience /></CurtainReveal></div>
         <div className="snap-section"><CurtainReveal><Contact /></CurtainReveal></div>
+        <HeartCounter />
         <Footer />
       </Suspense>
 
