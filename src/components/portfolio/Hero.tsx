@@ -6,7 +6,7 @@ import { ArrowDown, Download, Eye } from "lucide-react";
 const statement = [
   ["Designing", "systems."],
   ["Building", "interfaces."],
-  ["Also", "a", "passionate", "lawyer."],
+  ["Also", "a", "passionate", "law", "student."],
 ];
 
 const Hero = () => {

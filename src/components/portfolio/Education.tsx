@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import SectionTitle from "./SectionTitle";
 import iuLogo from "@/assets/edu-iu.png";
 import scpscLogo from "@/assets/edu-scpsc.png";
+import scbbhsLogo from "@/assets/edu-scbbhs.png";
 import { ExternalLink } from "lucide-react";
 
 const AUTO_CLOSE_MS = 5000;
@@ -23,6 +24,14 @@ const items = [
     note: "Foundation in academics with focus on critical thinking.",
     logo: scpscLogo,
     link: "https://www.scpsc.edu.bd/",
+  },
+  {
+    period: "2020 — 2022",
+    title: "SSC · Secondary School Certificate",
+    place: "Savar Cantonment Board Boys High School",
+    note: "Help to build a strong academic foundation.",
+    logo: scbbhsLogo,
+    link: "https://scbbhs.edu.bd/",
   },
 ];
 
