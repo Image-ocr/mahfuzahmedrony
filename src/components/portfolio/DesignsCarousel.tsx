@@ -8,6 +8,8 @@ import d3 from "@/assets/design-3.jpg";
 import d4 from "@/assets/design-4.png";
 import d5 from "@/assets/design-5.jpg";
 import d6 from "@/assets/design-6.png";
+import d7 from "@/assets/design-7.png";
+import d8 from "@/assets/design-8.png";
 
 const designs = [
   { src: d1, alt: "Icestroke ice cream poster" },
@@ -16,6 +18,8 @@ const designs = [
   { src: d4, alt: "Pistachio gelato poster" },
   { src: d5, alt: "Chocolate refresh poster" },
   { src: d6, alt: "Starbucks pumpkin spice poster" },
+  { src: d7, alt: "Blueberry milkshake poster" },
+  { src: d8, alt: "Blueberry energy drink poster" },
 ];
 
 const SPEED = 28; // seconds per loop
