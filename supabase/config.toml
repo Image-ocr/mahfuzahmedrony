@@ -1,1 +1,4 @@
 project_id = "qnsqbjldsanxafpwirsy"
+
+[functions.list-compliments]
+verify_jwt = false
