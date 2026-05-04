@@ -287,7 +287,7 @@ const ComplimentSystem = () => {
               </motion.div>
             )}
 
-            {/* THANKS — cosmic red themed */}
+            {/* THANKS — cosmic red themed (avatar + signature already in bg image) */}
             {view === "thanks" && (
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
@@ -298,39 +298,42 @@ const ComplimentSystem = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div
-                  className="relative flex flex-col items-center px-6 py-12 text-center text-white"
+                  className="relative aspect-square w-full"
                   style={{
                     backgroundImage: `url(${cosmicBg})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
                 >
-                  <div className="mb-6 flex gap-1">
+                  {/* Stars — auto, positioned just under embedded avatar (~33% down) */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.6, y: -6 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.55, ease: "easeOut" }}
+                    className="absolute left-1/2 top-[36%] flex -translate-x-1/2 gap-1"
+                  >
                     {[1, 2, 3, 4, 5].map((n) => (
                       <Star
                         key={n}
-                        className="h-6 w-6 fill-yellow-400 text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.7)]"
+                        className="h-5 w-5 fill-yellow-400 text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.9)] sm:h-6 sm:w-6"
                       />
                     ))}
-                  </div>
-                  <div
-                    className="w-full rounded-2xl border border-white/30 px-6 py-6 text-sm leading-relaxed text-white/95"
+                  </motion.div>
+
+                  {/* Glass box — centered, fixed size, text only inside */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.92, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: 0.85, duration: 0.6, ease: "easeOut" }}
+                    className="absolute left-1/2 top-1/2 w-[78%] max-w-sm -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-white/40 px-5 py-5 text-center text-[13px] leading-relaxed text-white sm:text-sm"
                     style={{
-                      background: "rgba(255,255,255,0.18)",
-                      backdropFilter: "blur(8px)",
-                      WebkitBackdropFilter: "blur(8px)",
+                      background: "rgba(255,255,255,0.22)",
+                      backdropFilter: "blur(10px)",
+                      WebkitBackdropFilter: "blur(10px)",
                     }}
                   >
-                    Thank you, <span className="font-semibold">{lastName}</span>,
-                    for your thoughtful compliment. Your words not only encourage
-                    but also motivate us to do even better.
-                  </div>
-                  <p
-                    className="mt-6 text-2xl text-yellow-300"
-                    style={{ fontFamily: "cursive" }}
-                  >
-                    Rony
-                  </p>
+                    Thank you, <span className="font-semibold">{lastName}</span>, for your thoughtful compliment. Your words not only encourage but also motivate us to do even better.
+                  </motion.div>
                 </div>
               </motion.div>
             )}
