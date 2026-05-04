@@ -298,41 +298,45 @@ const ComplimentSystem = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div
-                  className="relative aspect-square w-full"
+                  className="relative flex aspect-square w-full flex-col items-center justify-start"
                   style={{
                     backgroundImage: `url(${cosmicBg})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
                 >
-                  {/* Stars — auto, positioned just under embedded avatar (~33% down) */}
+                  {/* Spacer for embedded avatar in background (~32% of height) */}
+                  <div className="h-[32%] w-full shrink-0" aria-hidden />
+
+                  {/* Stars — centered under avatar */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.6, y: -6 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.55, ease: "easeOut" }}
-                    className="absolute left-1/2 top-[36%] flex -translate-x-1/2 gap-1"
+                    className="flex justify-center gap-1.5"
                   >
                     {[1, 2, 3, 4, 5].map((n) => (
                       <Star
                         key={n}
-                        className="h-5 w-5 fill-yellow-400 text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.9)] sm:h-6 sm:w-6"
+                        className="h-6 w-6 fill-yellow-400 text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.95)] sm:h-7 sm:w-7"
                       />
                     ))}
                   </motion.div>
 
-                  {/* Glass box — centered, fixed size, text only inside */}
+                  {/* Glass box — centered under stars, equal side margins */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.92, y: 10 }}
+                    initial={{ opacity: 0, scale: 0.94, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ delay: 0.85, duration: 0.6, ease: "easeOut" }}
-                    className="absolute left-1/2 top-1/2 w-[78%] max-w-sm -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-white/40 px-5 py-5 text-center text-[13px] leading-relaxed text-white sm:text-sm"
+                    className="mx-auto mt-5 w-[85%] max-w-md rounded-2xl border border-white/45 px-5 py-5 text-center text-[15px] font-semibold leading-[1.55] text-white sm:px-6 sm:py-6 sm:text-base"
                     style={{
-                      background: "rgba(255,255,255,0.22)",
-                      backdropFilter: "blur(10px)",
-                      WebkitBackdropFilter: "blur(10px)",
+                      background: "rgba(255,255,255,0.18)",
+                      backdropFilter: "blur(14px)",
+                      WebkitBackdropFilter: "blur(14px)",
+                      textShadow: "0 1px 3px rgba(0,0,0,0.45)",
                     }}
                   >
-                    Thank you, <span className="font-semibold">{lastName}</span>, for your thoughtful compliment. Your words not only encourage but also motivate us to do even better.
+                    Thank you, <span className="font-bold">{lastName}</span>, for your thoughtful compliment. Your words not only encourage but also motivate us to do even better.
                   </motion.div>
                 </div>
               </motion.div>
