@@ -1,0 +1,1 @@
+- Generate the sitemap from the explicit public routes and the curated `public/images` directory before development and production builds so crawler coverage stays synchronized with published content images.
