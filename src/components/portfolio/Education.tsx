@@ -1,9 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import SectionTitle from "./SectionTitle";
-import iuLogo from "@/assets/edu-iu.png";
-import scpscLogo from "@/assets/edu-scpsc.png";
-import scbbhsLogo from "@/assets/edu-scbbhs.png";
 import { ExternalLink } from "lucide-react";
 
 const AUTO_CLOSE_MS = 5000;
@@ -14,7 +11,7 @@ const items = [
     title: "LLB · Bachelor of Laws",
     place: "Islamic University",
     note: "Legal research, writing, case analysis & jurisprudence.",
-    logo: iuLogo,
+    logo: "/images/islamic-university-logo.webp",
     link: "https://iu.ac.bd/",
   },
   {
@@ -22,7 +19,7 @@ const items = [
     title: "HSC · Higher Secondary Certificate",
     place: "Savar Cantonment Public School & College",
     note: "Foundation in academics with focus on critical thinking.",
-    logo: scpscLogo,
+    logo: "/images/savar-cantonment-public-school-college-logo.webp",
     link: "https://www.scpsc.edu.bd/",
   },
   {
@@ -30,7 +27,7 @@ const items = [
     title: "SSC · Secondary School Certificate",
     place: "Savar Cantonment Board Boys High School",
     note: "Help to build a strong academic foundation.",
-    logo: scbbhsLogo,
+    logo: "/images/savar-cantonment-board-boys-high-school-logo.webp",
     link: "https://scbbhs.edu.bd/",
   },
 ];

@@ -1,6 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import heroImg from "@/assets/rony-hero.webp";
 import { ArrowDown, Download, Eye } from "lucide-react";
 
 const statement = [
@@ -46,8 +45,8 @@ const Hero = () => {
         className="absolute inset-0 z-0"
       >
         <img
-          src={heroImg}
-          alt="Mahfuz Ahmed Rony — RONY"
+          src="/images/rony-portfolio-hero.webp"
+          alt="Illustrated portrait of Mahfuz Ahmed Rony wearing sunglasses and a suit"
           fetchPriority="high"
           decoding="async"
           loading="eager"

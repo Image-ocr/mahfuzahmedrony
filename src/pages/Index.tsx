@@ -32,9 +32,9 @@ type RouteSeo = {
 
 const ROUTE_SEO: Record<string, RouteSeo> = {
   "/": {
-    title: "Mahfuz Ahmed Rony | Portfolio | Web Developer, Designer & Lawyer",
+    title: "Mahfuz Ahmed Rony | Law Student · Web Developer · Graphic Designer",
     description:
-      "Mahfuz Ahmed Rony (Rony) is a portfolio of a web developer, graphics designer and law student from Bangladesh. Explore projects, design work, skills and experience.",
+      "Portfolio of Mahfuz Ahmed Rony (RONY), a law student, web developer, and graphic designer from Dhaka, Bangladesh.",
     path: "/",
   },
   "/about": {
