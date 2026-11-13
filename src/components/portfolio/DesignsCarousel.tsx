@@ -2,24 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import { X } from "lucide-react";
-import d1 from "@/assets/design-1.jpg";
-import d2 from "@/assets/design-2.png";
-import d3 from "@/assets/design-3.jpg";
-import d4 from "@/assets/design-4.png";
-import d5 from "@/assets/design-5.jpg";
-import d6 from "@/assets/design-6.png";
-import d7 from "@/assets/design-7.png";
-import d8 from "@/assets/design-8.png";
 
 const designs = [
-  { src: d1, alt: "Icestroke ice cream poster" },
-  { src: d2, alt: "Vitamin C serum poster" },
-  { src: d3, alt: "Wolnut perfume poster" },
-  { src: d4, alt: "Pistachio gelato poster" },
-  { src: d5, alt: "Chocolate refresh poster" },
-  { src: d6, alt: "Starbucks pumpkin spice poster" },
-  { src: d7, alt: "Blueberry milkshake poster" },
-  { src: d8, alt: "Blueberry energy drink poster" },
+  { src: "/images/icestroke-ice-cream-poster.webp", alt: "Icestroke ice cream poster" },
+  { src: "/images/vitamin-c-serum-poster.webp", alt: "Vitamin C serum poster" },
+  { src: "/images/walnut-perfume-poster.webp", alt: "Walnut perfume poster" },
+  { src: "/images/pistachio-gelato-poster.webp", alt: "Pistachio gelato poster" },
+  { src: "/images/chocolate-refresh-poster.webp", alt: "Chocolate refresh poster" },
+  { src: "/images/starbucks-coffee-poster.webp", alt: "Starbucks coffee poster" },
+  { src: "/images/blueberry-milkshake-poster.webp", alt: "Blueberry milkshake poster" },
+  { src: "/images/blueberry-energy-drink-poster.webp", alt: "Blueberry energy drink poster" },
 ];
 
 const SPEED = 28; // seconds per loop

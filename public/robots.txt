@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mahfuzahmedrony.dpdns.org/sitemap.xml
-Host: https://mahfuzahmedrony.dpdns.org
+User-agent: Googlebot-Image
+Allow: /
+
+Sitemap: https://mahfuzahmedrony.lovable.app/sitemap.xml

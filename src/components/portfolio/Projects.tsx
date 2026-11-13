@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import SectionTitle from "./SectionTitle";
 import { ArrowUpRight, Play } from "lucide-react";
-import jurismindImg from "@/assets/project-jurismind.png";
-import messwalletImg from "@/assets/project-messwallet.png";
 
 const projects = [
   {
@@ -14,7 +12,7 @@ const projects = [
       "A legal-tech platform for legal research, writing, document generation, and AI-powered interaction.",
     link: "https://jurismind.live/AI",
     year: "2025",
-    image: jurismindImg,
+    image: "/images/jurismind-ai-project.webp",
   },
   {
     no: "02",
@@ -24,7 +22,7 @@ const projects = [
       "A financial management system for shared living environments to track expenses and generate organized financial documents.",
     link: "https://messwallet.vercel.app/",
     year: "2025",
-    image: messwalletImg,
+    image: "/images/messwallet-project.webp",
   },
 ];
 
