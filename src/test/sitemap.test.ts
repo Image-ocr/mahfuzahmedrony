@@ -24,7 +24,7 @@ describe("public sitemap and identity metadata", () => {
       .map((name) => `${siteUrl}/images/${encodeURIComponent(name)}`)
       .sort();
 
-    expect(imageLocations).toHaveLength(14);
+    expect(imageLocations).toHaveLength(imageFiles.length);
     expect(imageLocations.sort()).toEqual(expectedImages);
     expect(new Set(imageLocations).size).toBe(imageLocations.length);
   });
