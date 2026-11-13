@@ -115,7 +115,7 @@ const ProjectCard = ({ project, index, open, onToggle }: CardProps) => {
           <div className="relative h-72 w-full bg-foreground/5 sm:h-80">
             <img
               src={project.image}
-              alt={project.name}
+              alt={`${project.name} project artwork`}
               loading="lazy"
               decoding="async"
               className="absolute inset-0 h-full w-full object-contain p-6"
