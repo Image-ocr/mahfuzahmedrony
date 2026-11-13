@@ -1,31 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://mahfuzahmedrony.dpdns.org/</loc>
+    <loc>https://mahfuzahmedrony.lovable.app/</loc>
+    <lastmod>2026-04-25</lastmod>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/blueberry-energy-drink-poster.webp</image:loc>
+      <image:caption>Blueberry energy drink poster design</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/blueberry-milkshake-poster.webp</image:loc>
+      <image:caption>Blueberry milkshake poster design</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/chocolate-refresh-poster.webp</image:loc>
+      <image:caption>Chocolate drink poster design</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/icestroke-ice-cream-poster.webp</image:loc>
+      <image:caption>Icestroke ice cream poster design</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/islamic-university-logo.webp</image:loc>
+      <image:caption>Islamic University logo</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/jurismind-ai-project.webp</image:loc>
+      <image:caption>JurisMind AI legal technology project</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/mahfuz-ahmed-rony.jpg</image:loc>
+      <image:caption>Portrait of Mahfuz Ahmed Rony wearing sunglasses and a dark suit</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/messwallet-project.webp</image:loc>
+      <image:caption>MessWallet shared-expense management project</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/pistachio-gelato-poster.webp</image:loc>
+      <image:caption>Pistachio gelato poster design</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/savar-cantonment-board-boys-high-school-logo.webp</image:loc>
+      <image:caption>Savar Cantonment Board Boys High School logo</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/savar-cantonment-public-school-college-logo.webp</image:loc>
+      <image:caption>Savar Cantonment Public School &amp; College logo</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/starbucks-coffee-poster.webp</image:loc>
+      <image:caption>Starbucks coffee poster design</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/vitamin-c-serum-poster.webp</image:loc>
+      <image:caption>Vitamin C serum poster design</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mahfuzahmedrony.lovable.app/images/walnut-perfume-poster.webp</image:loc>
+      <image:caption>Walnut perfume poster design</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://mahfuzahmedrony.lovable.app/about</loc>
     <lastmod>2026-04-25</lastmod>
   </url>
   <url>
-    <loc>https://mahfuzahmedrony.dpdns.org/about</loc>
+    <loc>https://mahfuzahmedrony.lovable.app/capabilities</loc>
     <lastmod>2026-04-25</lastmod>
   </url>
   <url>
-    <loc>https://mahfuzahmedrony.dpdns.org/capabilities</loc>
+    <loc>https://mahfuzahmedrony.lovable.app/education</loc>
     <lastmod>2026-04-25</lastmod>
   </url>
   <url>
-    <loc>https://mahfuzahmedrony.dpdns.org/education</loc>
+    <loc>https://mahfuzahmedrony.lovable.app/projects</loc>
     <lastmod>2026-04-25</lastmod>
   </url>
   <url>
-    <loc>https://mahfuzahmedrony.dpdns.org/projects</loc>
+    <loc>https://mahfuzahmedrony.lovable.app/experience</loc>
     <lastmod>2026-04-25</lastmod>
   </url>
   <url>
-    <loc>https://mahfuzahmedrony.dpdns.org/experience</loc>
-    <lastmod>2026-04-25</lastmod>
-  </url>
-  <url>
-    <loc>https://mahfuzahmedrony.dpdns.org/contact</loc>
+    <loc>https://mahfuzahmedrony.lovable.app/contact</loc>
     <lastmod>2026-04-25</lastmod>
   </url>
 </urlset>
