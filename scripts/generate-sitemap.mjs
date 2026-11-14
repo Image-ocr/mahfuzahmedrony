@@ -1,7 +1,7 @@
 import { readdirSync, writeFileSync } from "node:fs";
 import { resolve, extname, basename } from "node:path";
 
-const BASE_URL = "https://mahfuzahmedrony.vercel.app";
+const BASE_URL = "https://mahfuzahmedrony.dpdns.org";
 const SITE_ROUTES = [
   ["/", "2026-04-25"],
   ["/about", "2026-04-25"],
