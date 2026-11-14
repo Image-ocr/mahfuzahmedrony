@@ -4,4 +4,4 @@ Allow: /
 User-agent: Googlebot-Image
 Allow: /
 
-Sitemap: https://mahfuzahmedrony.lovable.app/sitemap.xml
+Sitemap: https://mahfuzahmedrony.vercel.app/sitemap.xml
