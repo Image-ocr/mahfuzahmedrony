@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { resolve, extname } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const siteUrl = "https://mahfuzahmedrony.lovable.app";
+const siteUrl = "https://mahfuzahmedrony.vercel.app";
 const sitemap = readFileSync(resolve(process.cwd(), "public/sitemap.xml"), "utf8");
 const robots = readFileSync(resolve(process.cwd(), "public/robots.txt"), "utf8");
 const html = readFileSync(resolve(process.cwd(), "index.html"), "utf8");

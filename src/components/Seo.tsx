@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const SITE_URL = "https://mahfuzahmedrony.lovable.app";
+const SITE_URL = "https://mahfuzahmedrony.vercel.app";
 
 interface SeoProps {
   title: string;
